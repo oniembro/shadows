@@ -1,3 +1,4 @@
+//This version of the macro is the 'simplest', will prompt you to enter the value you want to substract from each image manually as it goes. 
 //This section is choosing the input and output locations
 //separate your files and ROIs into two separate folders and have a third folder for the output. First prompt will be for images folder, prompt 2 for ROIs, prompt 3 for where to save the results. Note that it will order your images and ROIs alphabetically to run them, so ideally your image file and their associated roi.zip should have the same name so they are opened at the same time. 
 	
