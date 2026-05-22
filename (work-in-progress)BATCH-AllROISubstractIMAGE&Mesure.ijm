@@ -1,6 +1,5 @@
-// SECTION 1: Choose input/output locations
-// Folder 1: images, Folder 2: ROIs, Folder 3: results output
-// Folder 4: merged output, Folder 5: background images
+// This version of the macro substracts images as backgorund substraction instead of a constant (essentially different values on XY to account for uneven illumination). 
+// need an extra folder where the images are stored. 
 
 file1 = getDirectory("Select Images Folder");
 list1 = getFileList(file1);
@@ -12,7 +11,7 @@ n2 = list2.length;
 
 file3 = getDirectory("Select Results Output Folder");
 file4 = getDirectory("Select Merged Output Folder");
-file5 = getDirectory("Select Background Images Folder"); // NEW
+file5 = getDirectory("Select Background Images Folder"); 
 
 Array.sort(list1);
 Array.sort(list2);
@@ -41,7 +40,7 @@ for (i = 0; i < small; i++) {
     selectWindow("C1-" + img_split);
 	imageTitle1 = "C1-" + img_split;
 
-    // Build background filename — ADJUST SUFFIX TO MATCH YOUR FILES
+    // It needs a few steps to give the bg image the correct name and import it porperly. 
     baseName = replace(img_name, ".nd2", ""); // strip extension
     bgName_C1 = baseName + "_C1-bg.tiff";
 	//substract
@@ -55,7 +54,7 @@ for (i = 0; i < small; i++) {
      selectWindow("C2-" + img_split);
 	imageTitle2 = "C2-" + img_split;
 
-    // Build background filename — ADJUST SUFFIX TO MATCH YOUR FILES
+
    // baseName = replace(img_name, ".nd2", ""); // strip extension
     bgName_C2 = baseName + "_C2-bg.tiff";
 	//substract
