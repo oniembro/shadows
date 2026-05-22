@@ -1,11 +1,11 @@
-// Select tiff directory for images to extract protrusion ROIs from
+// Select tiff directory for images 
 
         inputFolder= getDirectory("Choose a Directory");
         print(inputFolder);
 
 // Define output folder for tiff files with ROI
 
-	outputFolder= inputFolder + "/ROI/"; 
+	outputFolder= inputFolder + "/roi/"; 
         File.makeDirectory(outputFolder); 
         images= getFileList(inputFolder);  
 
