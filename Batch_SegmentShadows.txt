@@ -1,0 +1,60 @@
+// Select tiff directory for images to extract protrusion ROIs from
+
+        inputFolder= getDirectory("Choose a Directory");
+        print(inputFolder);
+
+// Define output folder for tiff files with ROI
+
+	outputFolder= inputFolder + "/ROI/"; 
+        File.makeDirectory(outputFolder); 
+        images= getFileList(inputFolder);  
+
+// Run Auto Threshold function on tiff files, and select ROIs based on threshold parameter - Yen chosen as seemed most consistent when comparing through individual tiff images
+		roiManager("show none");
+        for (i=0; i<images.length; i++) { 
+                setBatchMode(true); //batch mode 
+                inputPath= inputFolder + images[i]; 
+                open (inputPath); 
+                imagesName=getTitle();
+
+// This section is the thresholding steps so can be editted to match your process. 
+
+
+	Stack.getPosition(channel, slice, frame);
+	getDimensions(w, h, c, z, nframes);
+	run("8-bit"); //this is needed to run the convert to mask command
+	Stack.setChannel(3);
+
+		while (frame <= nframes) {
+	run("Gaussian Blur...", "sigma=0.75 scaled slice"); 
+	run("Subtract Background...", "rolling=200 light slice");
+	run("Enhance Contrast", "saturated=0.35");
+	setAutoThreshold("Yen");
+	setOption("BlackBackground", true); 
+	run("Convert to Mask", "method=Yen background=Light only");
+	run("Adjustable Watershed", "tolerance=8 slice");
+	run("Analyze Particles...", "size=40-500 exclude add slice");
+	
+    frame = frame + 1;
+    Stack.setPosition(channel, slice, frame); 
+}
+
+
+
+
+
+// The below will select the ROI Manager, select all ROIs for the image, save it to an ROI folder, then delete the ROIs from the ROI Manager before creating new ROIs from the next image		
+		
+		selectWindow("ROI Manager");
+		run("Select All");
+		roiManager("Save", outputFolder + imagesName + ".zip")
+		selectWindow("ROI Manager");
+		run("Select All");
+		roiManager("Delete");
+
+		close(); 
+		write("DONE"); 
+
+  
+} 
+setBatchMode(false); 

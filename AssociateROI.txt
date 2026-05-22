@@ -1,0 +1,3 @@
+//on my Mac sometimes ROI manager shows all the ROIs on the frame I'm looking at. To only see those ROIs associated with the active frame, run the following:
+roiManager("Show All");
+roiManager("Associate", "true");
